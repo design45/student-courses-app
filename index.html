@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Courses App - Enhanced Study Diary and Reminders with Locations</title>
+  <!-- External Font, Icons, and CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-container" role="main" aria-label="Student Courses Mobile App">
+    <header>
+      <div class="logo" aria-label="App Logo">Student Courses</div>
+      <div class="header-controls">
+        <select id="course-filter" class="course-filter" aria-label="Filter by course">
+          <option value="">All Courses</option>
+        </select>
+        <nav aria-label="Primary Navigation">
+          <button id="menu-toggle" aria-controls="primary-menu" aria-expanded="false" aria-label="Toggle menu">&#9776;</button>
+        </nav>
+      </div>
+    </header>
+    <main id="app-content" tabindex="0"><!-- dynamic content rendered by JS --></main>
+    <nav class="bottom-nav" role="navigation" aria-label="Bottom navigation">
+      <button aria-label="Courses" id="nav-courses" class="active" title="Courses">
+        <span class="material-icons">school</span>
+        <span>Courses</span>
+      </button>
+      <button aria-label="Work Diary" id="nav-work-diary" title="Work Diary">
+        <span class="material-icons">edit_note</span>
+        <span>Diary</span>
+      </button>
+      <button aria-label="Connections" id="nav-connections" title="Connections">
+        <span class="material-icons">people</span>
+        <span>Connections</span>
+      </button>
+      <button aria-label="Shared Calendar" id="nav-calendar" title="Shared Calendar">
+        <span class="material-icons">calendar_month</span>
+        <span>Calendar</span>
+      </button>
+    </nav>
+  </div>
+  <!-- External JavaScript -->
+  <script src="js/app.js"></script>
+</body>
+</html>
