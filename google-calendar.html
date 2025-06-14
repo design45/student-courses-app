@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Courses App - Google Calendar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f8fb;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: linear-gradient(135deg, #4c51bf, #06b6d4);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgb(6 182 212 / 0.3);
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    nav a {
+      color: white;
+      margin-left: 1.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    nav a:hover, nav a.active {
+      color: #bae6fd;
+    }
+    main {
+      flex: 1;
+      padding: 1rem 2rem;
+      background: white;
+      max-width: 960px;
+      margin: 1rem auto 2rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgb(6 182 212 / 0.15);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .view-toggle {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .view-toggle button {
+      background: #06b6d4;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .view-toggle button.active {
+      background: #0891b2;
+    }
+    .calendar-container {
+      flex: 1;
+      min-height: 600px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+    .calendar-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .error-message {
+      color: #dc2626;
+      font-weight: 700;
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Student Courses App</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="index.html#courses">Courses</a>
+      <a href="index.html#work-diary">Work Diary</a>
+      <a href="index.html#connections">Connections</a>
+      <a href="google-calendar.html" class="active">Calendar</a>
+    </nav>
+  </header>
+  <main>
+    <div class="view-toggle" role="tablist" aria-label="Calendar view toggle">
+      <button id="daily-view-btn" role="tab" aria-selected="true" tabindex="0">Daily View</button>
+      <button id="hourly-view-btn" role="tab" aria-selected="false" tabindex="-1">Hourly View</button>
+    </div>
+    <div class="calendar-container" id="calendar-container" aria-live="polite" aria-busy="false">
+      <iframe
+        id="calendar-iframe"
+        class="calendar-iframe"
+        src="https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FNew_York&mode=DAY"
+        title="Google Calendar Daily View"
+        loading="lazy"
+        onerror="showError()"
+      ></iframe>
+      <div id="error-message" class="error-message" style="display:none;">
+        Unable to load Google Calendar. Please check your internet connection or try again later.
+      </div>
+    </div>
+  </main>
+  <script>
+    const dailyBtn = document.getElementById('daily-view-btn');
+    const hourlyBtn = document.getElementById('hourly-view-btn');
+    const calendarIframe = document.getElementById('calendar-iframe');
+    const errorMessage = document.getElementById('error-message');
+    const calendarContainer = document.getElementById('calendar-container');
+
+    function showError() {
+      calendarIframe.style.display = 'none';
+      errorMessage.style.display = 'block';
+      calendarContainer.setAttribute('aria-busy', 'false');
+    }
+
+    function setActiveView(view) {
+      if (view === 'daily') {
+        calendarIframe.src = 'https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FNew_York&mode=DAY';
+        dailyBtn.setAttribute('aria-selected', 'true');
+        dailyBtn.tabIndex = 0;
+        hourlyBtn.setAttribute('aria-selected', 'false');
+        hourlyBtn.tabIndex = -1;
+      } else {
+        calendarIframe.src = 'https://calendar.google.com/calendar/embed?src=en.usa%23holiday%40group.v.calendar.google.com&ctz=America%2FNew_York&mode=AGENDA';
+        dailyBtn.setAttribute('aria-selected', 'false');
+        dailyBtn.tabIndex = -1;
+        hourlyBtn.setAttribute('aria-selected', 'true');
+        hourlyBtn.tabIndex = 0;
+      }
+      calendarIframe.style.display = 'block';
+      errorMessage.style.display = 'none';
+      calendarContainer.setAttribute('aria-busy', 'true');
+    }
+
+    dailyBtn.addEventListener('click', () => setActiveView('daily'));
+    hourlyBtn.addEventListener('click', () => setActiveView('hourly'));
+
+    // Initialize with daily view
+    setActiveView('daily');
+  </script>
+</body>
+</html>
